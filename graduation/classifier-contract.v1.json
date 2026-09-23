@@ -1,0 +1,21 @@
+{
+  "schema": "after-hours/universal-classifier/v1",
+  "purpose": "Classify any knowledge bit into the StudySyndicate factored domain and emit reusable study sets. Private workspace findings graduate forward; reusable lessons never flow backward.",
+  "input": {
+    "bit": "free text, code, source-note, media reference, or problem statement",
+    "allowed_kinds": ["text", "code", "source-note", "media-ref", "problem"]
+  },
+  "classify": {
+    "actors": ["learner", "source", "concept", "prompt", "response", "session", "attempt", "media"],
+    "relationships": ["derived-from", "tests", "explains", "contains", "depends-on", "uses-media"],
+    "components": ["text-content", "source-ref", "media-ref", "rubric", "schedule", "provenance"]
+  },
+  "emit_study_sets": {
+    "flashcard": "prompt -> response with media optional",
+    "recall_drill": "free-recall prompt + rubric-based scoring",
+    "weak_area_tag": "concept linked to attempts for the weakness map",
+    "schedule": "FSRS schedule component for spaced repetition"
+  },
+  "evidence_rule": "Assistance is provenance, never mastery. Graduation requires blank-file reconstruction and executable proof per the target StudySyndicate gates.",
+  "targets": ["study-syndicate/content", "study-syndicate/harness/problems", "study-syndicate/practice"]
+}

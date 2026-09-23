@@ -1,0 +1,30 @@
+{
+  "schema": "after-hours/pins/v1",
+  "upstreams_root": "Dev/_upstreams",
+  "sources": [
+    {
+      "id": "deepseek-harness",
+      "repository": "deepseek-ai/deepseek-harness",
+      "default_branch": "master",
+      "resolved_sha": "ddefc45fbc7f8e46dd73185e68295696d1297887"
+    },
+    {
+      "id": "prompts-chat",
+      "repository": "f/prompts.chat",
+      "default_branch": "main",
+      "resolved_sha": "f78a1c5136fa080155d928e0d7e2b4a41ddef03e"
+    },
+    {
+      "id": "mattpocock-skills",
+      "repository": "mattpocock/skills",
+      "default_branch": "main",
+      "resolved_sha": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7"
+    },
+    {
+      "id": "michaelshimeles-skills",
+      "repository": "michaelshimeles/skills",
+      "default_branch": "main",
+      "resolved_sha": "4b72f46b045e6fef52e6a98d4c162dd309826aed"
+    }
+  ]
+}
