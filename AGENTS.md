@@ -1,5 +1,9 @@
 # After Hours Agent Governance
 
+## P00/P01/P04 canonical product authority
+AgentSwitchboard is a retired product; donor evidence/verified existing caller only. TokenCorridor owns the product control plane. Technical cleanup does not reopen retirement. No new ASB work.
+
+
 Status: canonical repository governance contract.
 
 This file is the single source of truth for how writing agents operate in
