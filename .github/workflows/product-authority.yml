@@ -1,0 +1,22 @@
+name: Retired-product governance
+on:
+  pull_request:
+    paths: [AGENTS.md, .github/workflows/product-authority.yml]
+  push:
+    paths: [AGENTS.md, .github/workflows/product-authority.yml]
+permissions:
+  contents: read
+jobs:
+  protect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('AGENTS.md').read_text(encoding='utf-8')
+          for x in ("AgentSwitchboard is a retired product","TokenCorridor owns the product control plane","Technical cleanup does not reopen retirement"):
+              assert x in s, "POLICY_REVERSION:"+x
+          PY
