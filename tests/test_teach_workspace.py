@@ -20,6 +20,7 @@ class TeachWorkspaceTests(unittest.TestCase):
         self.data = self.root / "private-data"
         self.env = dict(os.environ)
         for key in ("CI", "GITHUB_ACTIONS", "CODESPACES", "CODEX_CLOUD", "CODEX_REMOTE",
+                    "CODEX_ENVIRONMENT_ID", "CODEX_EXEC_SERVER_REMOTE_BASE_URL",
                     "CODEX_HOME", "CLAUDE_CONFIG_DIR", "XDG_CONFIG_HOME"):
             self.env.pop(key, None)
         self.env.update(HOME=str(self.root), USERPROFILE=str(self.root),
@@ -73,7 +74,7 @@ class TeachWorkspaceTests(unittest.TestCase):
         self.assertEqual(list(nested.iterdir()), [nested / ".git"])
 
     def test_refuses_redirected_root_and_hosted_environment(self):
-        for env in (dict(self.env, CI="true"),
+        for env in (dict(self.env, CI="true"), dict(self.env, CODEX_ENVIRONMENT_ID="synthetic-id"),
                     dict(self.env, LOCALAPPDATA=str(self.root / "OneDrive - Example"),
                          XDG_DATA_HOME=str(self.root / "OneDrive - Example"),
                          HOME=str(self.root / "OneDrive - Example"))):
@@ -97,6 +98,32 @@ class TeachWorkspaceTests(unittest.TestCase):
         result = self.workspace("--check-path", "redirect/session.md")
         self.assertNotEqual(result.returncode, 0)
         self.assertFalse((self.repo / "session.md").exists())
+
+    def test_topic_name_does_not_match_sync_path_rules(self):
+        result = self.run_script("teach-workspace.py", "--topic", "OneDrive admin commands")
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_punctuation_distinguishes_topics(self):
+        one = self.run_script("teach-workspace.py", "--topic", "C++")
+        two = self.run_script("teach-workspace.py", "--topic", "C#")
+        self.assertEqual(one.returncode, 0, one.stderr)
+        self.assertEqual(two.returncode, 0, two.stderr)
+        self.assertNotEqual(json.loads(one.stdout)["workspace"], json.loads(two.stdout)["workspace"])
+
+    def test_check_path_refuses_hardlink_to_checkout(self):
+        first = self.workspace()
+        self.assertEqual(first.returncode, 0, first.stderr)
+        path = Path(json.loads(first.stdout)["workspace"])
+        source = self.repo / "source.md"
+        source.write_text("preserved")
+        try:
+            os.link(source, path / "notes.md")
+        except OSError:
+            self.skipTest("hardlinks unavailable on this host")
+        result = self.workspace("--check-path", "notes.md")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("linked to another path", result.stderr)
+        self.assertEqual(source.read_text(), "preserved")
 
     def test_router_replacement_requires_a_verified_archive(self):
         router = self.root / ".claude" / "commands" / "teach.md"

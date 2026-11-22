@@ -47,7 +47,7 @@ persisting state until the local agent takes over.
 
 Personal records stay on the host by default. A graduation request may prepare
 a shareable candidate on that same host. Copy, stage, commit or publish only
-the exact reviewed material and destination the learner explicitly chooses.
+the exact reviewed material and destination the learner explicitly chooses. Graduate reusable derivatives to the relevant project without transferring raw private session folders.
 
 ### Local agent routers
 

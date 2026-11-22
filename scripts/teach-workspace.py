@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -15,11 +16,14 @@ TEMPLATES = {
     "RESOURCES.md": "# Resources\n\nRecord trusted sources and useful references here.\n",
 }
 HOSTED_ENV = ("CI", "GITHUB_ACTIONS", "CODESPACES", "CODEX_CLOUD", "CODEX_REMOTE")
+MANAGED_ENV = ("CODEX_ENVIRONMENT_ID", "CODEX_EXEC_SERVER_REMOTE_BASE_URL")
 SYNC_NAMES = ("onedrive", "dropbox", "google drive", "icloud drive", "cloudstorage")
 
 
 def is_hosted() -> bool:
-    return any(os.environ.get(key, "").lower() in {"true", "1", "yes"} for key in HOSTED_ENV)
+    return any(os.environ.get(key) for key in MANAGED_ENV) or any(
+        os.environ.get(key, "").lower() in {"true", "1", "yes"} for key in HOSTED_ENV
+    )
 
 
 def host_data_home() -> Path:
@@ -49,16 +53,20 @@ def guard(path: Path) -> None:
     ]
     resolved = path.resolve()
     if any(resolved.is_relative_to(root) for root in sync_roots) or any(
-        part.casefold().startswith(SYNC_NAMES) for part in (*path.parts, *resolved.parts)
+        part.casefold() in SYNC_NAMES or part.casefold().startswith("onedrive - ")
+        for part in (*path.parts, *resolved.parts)
     ):
         raise ValueError("teaching workspace must be outside known sync folders")
     for parent in (path, *path.parents):
         try:
-            flags = getattr(parent.lstat(), "st_file_attributes", 0)
+            info = parent.lstat()
         except FileNotFoundError:
-            flags = 0
-        if parent.is_symlink() or flags & stat.FILE_ATTRIBUTE_REPARSE_POINT:
+            info = None
+        if info and (stat.S_ISLNK(info.st_mode) or
+                     getattr(info, "st_file_attributes", 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT):
             raise ValueError("teaching workspace cannot traverse a symlink or junction")
+        if info and stat.S_ISREG(info.st_mode) and info.st_nlink > 1:
+            raise ValueError("existing artifact is linked to another path")
         git_marker = parent / ".git"
         if git_marker.exists() or git_marker.is_symlink() or (
             (parent / "HEAD").is_file() and (parent / "objects").is_dir()
@@ -68,8 +76,12 @@ def guard(path: Path) -> None:
 
 
 def topic_slug(topic: str) -> str:
-    slug = re.sub(r"[^a-z0-9]+", "-", topic.lower()).strip("-")
-    if not slug or len(slug) > 80 or re.fullmatch(r"con|prn|aux|nul|com[1-9]|lpt[1-9]", slug):
+    normalized = " ".join(topic.casefold().split())
+    slug = re.sub(r"[^a-z0-9]+", "-", normalized).strip("-")
+    if not re.fullmatch(r"[a-z0-9]+(?:[ -][a-z0-9]+)*", normalized):
+        digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:12]
+        slug = f"{slug or 'topic'}~{digest}"
+    if not normalized or len(slug) > 80 or re.fullmatch(r"con|prn|aux|nul|com[1-9]|lpt[1-9]", slug):
         raise ValueError("provide a topic that yields a usable directory name")
     return slug
 
