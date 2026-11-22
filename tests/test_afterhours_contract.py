@@ -18,8 +18,8 @@ class AfterHoursContract(unittest.TestCase):
     def test_routers(self):
         for name in ("teach-opencode.md", "teach-claude.md", "teach-codex-SKILL.md"):
             text = (ROOT / "routers" / name).read_text(encoding="utf-8")
-            self.assertIn("Dev/_teach", text)
-            self.assertIn("Never write teach workspace files into the invoking repo", text)
+            self.assertIn("<teach-workspace-runner>", text)
+            self.assertIn("exact artifact, destination, and operation", text)
 
     def test_classifier_contract(self):
         contract = json.loads(
@@ -27,6 +27,7 @@ class AfterHoursContract(unittest.TestCase):
         self.assertEqual(contract["schema"], "after-hours/universal-classifier/v1")
         self.assertIn("flashcard", contract["emit_study_sets"])
         self.assertIn("recall_drill", contract["emit_study_sets"])
+        self.assertIs(contract["repository_transfer"]["automatic"], False)
 
     def test_templates(self):
         for name in ("MISSION.md", "RESOURCES.md", "NOTES.md"):

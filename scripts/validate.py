@@ -24,9 +24,9 @@ def main():
 
     for name in ("teach-opencode.md", "teach-claude.md", "teach-codex-SKILL.md"):
         text = (ROOT / "routers" / name).read_text(encoding="utf-8")
-        check("Dev/_teach" in text, f"router {name} canonical home")
-        check("Never write teach workspace files into the invoking repo" in text,
-              f"router {name} no-repo-pollution rule")
+        check("<teach-workspace-runner>" in text, f"router {name} prewrite runner")
+        check("exact artifact, destination, and operation" in text,
+              f"router {name} operator-controlled transfer")
 
     for name in ("MISSION.md", "RESOURCES.md", "NOTES.md"):
         text = (ROOT / "workspace-template" / name).read_text(encoding="utf-8")
@@ -36,6 +36,8 @@ def main():
     check(contract.get("schema") == "after-hours/universal-classifier/v1", "classifier schema")
     check("flashcard" in contract.get("emit_study_sets", {}), "classifier emits flashcards")
     check("recall_drill" in contract.get("emit_study_sets", {}), "classifier emits recall drills")
+
+    check(contract.get("repository_transfer", {}).get("automatic") is False, "graduation has no automatic transfer")
 
     ag = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
     check("learning-records" in ag or "learner" in ag, "governance covers learner evidence")
