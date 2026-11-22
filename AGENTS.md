@@ -7,9 +7,11 @@ AgentSwitchboard is a retired product; donor evidence/verified existing caller o
 Status: canonical repository governance contract.
 
 This file is the single source of truth for how writing agents operate in
-AfterHours. Private learner workspaces under `Dev/_teach/` are governed by the
-teach routers and the active topic MISSION; this contract governs the system
-itself (routers, templates, pins, graduation).
+AfterHours. Personal learning follows the shared host-local `/teach` route in
+the [README](README.md). The router/workspace software is repository code.
+Session state always lives on the learner's host outside Git and synced locations.
+The operator chooses the exact reviewed artifact, destination, and action for
+each transfer. A lesson or graduation request alone grants no transfer authority.
 
 ## Agent operating principles
 
@@ -33,8 +35,7 @@ inventing replacements. Cite prior art.
 
 ### No completion without proof
 Completion requires named changes, executed validation, a commit SHA, and
-reported push/PR state. Private `Dev/_teach/` attempts are learner evidence,
-never commit proof.
+reported push/PR state. Private host workspace attempts are learner evidence, never commit proof.
 
 ### Learning evidence integrity
 Assistance is provenance, never mastery. Graduation into StudySyndicate
