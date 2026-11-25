@@ -3,11 +3,15 @@
 > Like going to the professor's office and finding it closed — but still getting the help.
 
 After Hours is the cross-harness learning system: `/teach` routers, a centralized
-private-workspace convention, pinned upstream skills, and a graduation bridge
-into StudySyndicate reusable study sets.
+private-workspace convention, pinned upstream skills, and an optional graduation bridge
+into reusable study sets.
 
 It owns the shared teaching route across agents. The learner owns personal records
 and chooses what, if anything, to share with an owning repository.
+
+## Standalone teaching
+
+A standalone teaching session must not require another learning product or an engineering orchestrator. AfterHours owns teaching entry points and workspace routing, not curriculum or a study app. Request interview practice directly in a local agent, attempt a challenge before seeing a solution, receive feedback, and resume the same topic. Existing workspace paths are compatibility paths, not runtime dependencies.
 
 ## Status
 

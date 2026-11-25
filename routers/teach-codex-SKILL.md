@@ -19,3 +19,9 @@ Route to the pinned upstream skill, do not rely on parametric knowledge alone.
 3. If the active repo defines its own teach protocol in AGENTS.md, follow its teaching and evidence conventions within the host-local boundary (StudySyndicate: learning evidence integrity, premise-first, one mechanism + one exercise, blank-file reconstruction for mastery, never treat assistance as mastery).
 
 4. Flow: interview for mission if vague; teach one mechanism + one exercise per turn; reuse `./assets/` components across lessons; cite high-trust resources; record genuine understanding shifts in `learning-records/NNNN-slug.md`; end with one next step + retrieval check. `recap` resumes from learning-records.
+
+## Demonstration-first practice
+
+A standalone teaching session must not require another learning product or an engineering orchestrator. Other projects are optional read-only references or explicitly selected tools. Graduation is opt-in, not a lesson gate.
+
+For interview practice or professional skill claims, start with one concrete challenge (premise, inputs, expected output, constraints, allowed assistance) if the topic is clear. Treat claims as practice targets, not mastery. Ask for an attempt before showing a solution; assess against explicit criteria or executable tests, explain gaps, provide graduated hints, and retry with a fresh transfer exercise. Record assistance, observed results and next unproven step in the verified local workspace; recap reopens the same workspace. Without a verified host runner, practice in memory without claiming persistence.

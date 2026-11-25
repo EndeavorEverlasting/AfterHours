@@ -28,6 +28,10 @@ def main():
         check("exact artifact, destination, and operation" in text,
               f"router {name} operator-controlled transfer")
 
+        check("A standalone teaching session must not require another learning product or an engineering orchestrator." in text, f"router {name} standalone teaching")
+        check("before showing a solution" in text and "same workspace" in text,
+              f"router {name} independent practice and resume")
+
     for name in ("MISSION.md", "RESOURCES.md", "NOTES.md"):
         text = (ROOT / "workspace-template" / name).read_text(encoding="utf-8")
         check("{{" in text, f"template {name} has placeholders")

@@ -13,6 +13,10 @@ Session state always lives on the learner's host outside Git and synced location
 The operator chooses the exact reviewed artifact, destination, and action for
 each transfer. A lesson or graduation request alone grants no transfer authority.
 
+## Product boundary
+
+A standalone teaching session must not require another learning product or an engineering orchestrator. AfterHours owns the teaching route and workspace safeguards; curriculum and study products retain their ownership. Graduation and publication are separate optional activities. Apply demonstration-first practice in all routers.
+
 ## Agent operating principles
 
 ### Evidence before action

@@ -25,3 +25,9 @@ You are invoked via /teach. Route to the pinned upstream skill, do not use param
 - End each turn with one exact next step and a retrieval check.
 
 If $ARGUMENTS is empty, ask what to teach. `recap` resumes from learning-records (first weak frontier).
+
+## Demonstration-first practice
+
+A standalone teaching session must not require another learning product or an engineering orchestrator. Other projects are optional read-only references or explicitly selected tools. Graduation is opt-in, not a lesson gate.
+
+For interview practice or professional skill claims, start with one concrete challenge (premise, inputs, expected output, constraints, allowed assistance) if the topic is clear. Treat claims as practice targets, not mastery. Ask for an attempt before showing a solution; assess against explicit criteria or executable tests, explain gaps, provide graduated hints, and retry with a fresh transfer exercise. Record assistance, observed results and next unproven step in the verified local workspace; recap reopens the same workspace. Without a verified host runner, practice in memory without claiming persistence.
