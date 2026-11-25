@@ -1,0 +1,17 @@
+name: Teaching ownership
+on:
+  pull_request:
+    paths: [AGENTS.md, 'docs/TEACHING-OWNERSHIP-HANDOFF.md', 'routers/**', 'scripts/**', 'tests/**', '.github/workflows/teaching-ownership.yml']
+  push:
+    paths: [AGENTS.md, 'docs/TEACHING-OWNERSHIP-HANDOFF.md', 'routers/**', 'scripts/**', 'tests/**', '.github/workflows/teaching-ownership.yml']
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: python scripts/validate.py
+      - run: python -m unittest discover -s tests -v

@@ -28,6 +28,12 @@ def main():
         check("exact artifact, destination, and operation" in text,
               f"router {name} operator-controlled transfer")
 
+        check("A standalone teaching session must not require another learning product or an engineering orchestrator." in text, f"router {name} standalone teaching")
+        check("only when the learner explicitly selects" in text and "minimal mission locally" in text,
+              f"router {name} clear-topic start and explicit reference selection")
+        check("before showing a solution" in text and "same workspace" in text,
+              f"router {name} independent practice and resume")
+
     for name in ("MISSION.md", "RESOURCES.md", "NOTES.md"):
         text = (ROOT / "workspace-template" / name).read_text(encoding="utf-8")
         check("{{" in text, f"template {name} has placeholders")
@@ -41,6 +47,14 @@ def main():
 
     ag = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
     check("learning-records" in ag or "learner" in ag, "governance covers learner evidence")
+
+    handoff = ROOT / "docs/TEACHING-OWNERSHIP-HANDOFF.md"
+    check("docs/TEACHING-OWNERSHIP-HANDOFF.md" in ag, "governance routes canonical handoff")
+    check(handoff.is_file(), "canonical handoff exists")
+    if handoff.is_file():
+        h = handoff.read_text(encoding="utf-8")
+        for clause in ("Teaching entry point only; curriculum authority remains with the selected curriculum owner.", "HOST_UNVERIFIED", "reopen the same topic", "no repository writes"):
+            check(clause in h, f"handoff clause: {clause}")
 
     if FAILURES:
         print("FAIL:")
