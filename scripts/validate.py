@@ -48,6 +48,14 @@ def main():
     ag = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
     check("learning-records" in ag or "learner" in ag, "governance covers learner evidence")
 
+    handoff = ROOT / "docs/TEACHING-OWNERSHIP-HANDOFF.md"
+    check("docs/TEACHING-OWNERSHIP-HANDOFF.md" in ag, "governance routes canonical handoff")
+    check(handoff.is_file(), "canonical handoff exists")
+    if handoff.is_file():
+        h = handoff.read_text(encoding="utf-8")
+        for clause in ("Teaching entry point only; curriculum authority remains with the selected curriculum owner.", "HOST_UNVERIFIED", "reopen the same topic", "no repository writes"):
+            check(clause in h, f"handoff clause: {clause}")
+
     if FAILURES:
         print("FAIL:")
         for f in FAILURES:
