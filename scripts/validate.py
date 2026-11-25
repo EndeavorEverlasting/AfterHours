@@ -29,6 +29,8 @@ def main():
               f"router {name} operator-controlled transfer")
 
         check("A standalone teaching session must not require another learning product or an engineering orchestrator." in text, f"router {name} standalone teaching")
+        check("only when the learner explicitly selects" in text and "minimal mission locally" in text,
+              f"router {name} clear-topic start and explicit reference selection")
         check("before showing a solution" in text and "same workspace" in text,
               f"router {name} independent practice and resume")
 

@@ -13,12 +13,12 @@ You are invoked via /teach. Route to the pinned upstream skill, do not use param
 2. Before generating any personal learning artifact, run this command on the learner's host:
    `python "<teach-workspace-runner>" --topic "<stable subject name>"`
    Use the returned workspace for all session data, including lesson files, answers, workbooks, recordings, notes, and learning records. Reuse the same subject name on resume. For a known older host workspace, append `--existing "<absolute workspace path>"`. Before each artifact write, validate its relative destination with `--check-path "<relative path>"`.
-   If the local runner or host is unavailable, keep preparation in memory and ask the host agent to resume. Keep the source checkout read-only. The learner must choose the exact artifact, destination, and operation before any repository copy, staging, commit, or publication.
+   If the local runner or host is unavailable, continue practice in memory and request host recovery only for durable persistence. Keep the source checkout read-only. The learner must choose the exact artifact, destination, and operation before any repository copy, staging, commit, or publication.
 
-3. If the active repo defines its own teach protocol in AGENTS.md, follow its teaching and evidence conventions within the host-local boundary.
+3. Apply a repository's teaching and evidence conventions only when the learner explicitly selects it as curriculum or exercise reference; do not infer a product dependency from the active checkout.
 
 4. Flow:
-- If MISSION.md missing or topic vague, interview for Why / Success looks like / Constraints / Out of scope before teaching.
+- If the topic is vague, interview for Why / Success looks like / Constraints / Out of scope before teaching. If the topic is clear but MISSION.md is missing, initialize a minimal mission locally and begin the exercise.
 - Teach one tightly-scoped mechanism + one code exercise per turn.
 - Cite high-trust resources in RESOURCES.md, link them from lessons.
 - Record genuine understanding shifts in `learning-records/NNNN-slug.md`, never mere coverage.
